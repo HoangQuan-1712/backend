@@ -19,10 +19,7 @@ export class User {
   password: string;
 
   @Column()
-    role: number;
-
-  @Column()
-    phone: string;
+  phone: string;
     
   @Column()
     gender: string;
@@ -34,6 +31,5 @@ export class User {
     birthday: Date;
 
   @OneToMany(() => Role, role => role.users)
-  @JoinTable()
-  roles: Role[];
+  role: Role;
 }

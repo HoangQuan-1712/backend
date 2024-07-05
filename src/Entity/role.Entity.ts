@@ -9,7 +9,7 @@ export class Role {
   @Column()
   name: string;
 
-  @ManyToOne(() => User, user => user.roles)
+  @ManyToOne(() => User, user => user.role)
   users: User[];
 }
 
