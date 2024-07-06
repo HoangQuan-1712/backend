@@ -20,15 +20,15 @@ export class User {
 
   @Column()
   phone: string;
-    
-  @Column()
-    gender: string;
 
   @Column()
-    address: string;
+  gender: string;
 
   @Column()
-    birthday: Date;
+  address: string;
+
+  @Column()
+  birthday: Date;
 
   @OneToMany(() => Role, role => role.users)
   role: Role;
