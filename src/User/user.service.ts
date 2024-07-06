@@ -36,9 +36,9 @@ export class UserService {
   async findUsersByQuery(q: string): Promise<User[]> {
     return await this.usersRepository
       .createQueryBuilder('user')
-      .where('user.firstname LIKE :query', { query: `%${query}%` })
-      .orWhere('user.lastname LIKE :query', { query: `%${query}%` })
-      .orWhere('user.email LIKE :query', { query: `%${query}%` })
+      .where('user.firstname LIKE :query', { query: `%${q}%` })
+      .orWhere('user.lastname LIKE :query', { query: `%${q}%` })
+      .orWhere('user.email LIKE :query', { query: `%${q}%` })
       .getMany();
   }
 }
