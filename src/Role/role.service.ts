@@ -24,7 +24,7 @@ export class RolesService {
 
   async update(id: number, updatedRole: Partial<Role>): Promise<Role> {
     await this.rolesRepository.update(id, updatedRole);
-    return this.rolesRepository.findOne({ id });
+    return this.rolesRepository.findOne({ where: { id } });
   }
 
   async remove(id: number): Promise<void> {

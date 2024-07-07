@@ -1,8 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriesService } from 'src/category/categories.service';
 import { Category } from '../Entity/category.entity';
-import { DeleteManyDto } from './dto/delete-many.dto';
-import { get } from 'http';
 
 @Controller('categories')
 export class CategoriesController {
@@ -50,9 +48,4 @@ export class CategoriesController {
     return this.categoriesService.findCategoryById(id);
   }
 
-  @Delete("many")
-  @UsePipes(new ValidationPipe({ transform: true }))
-  deleteMany(@Body() deleteManyDto: DeleteManyDto): Promise<void> {
-    return this.categoriesService.deleteMany(deleteManyDto.listid);
-  }
 }

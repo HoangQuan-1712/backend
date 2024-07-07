@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ItemService } from './item.service';
-import { Item } from 'src/items/entity/item.entity';
+import { Item } from 'src/entity/item.entity';
 
 @Controller('items')
 export class ItemController {
@@ -13,7 +13,7 @@ export class ItemController {
 
   @Get(':id')
   findOne(@Param('id') id: number): Promise<Item> {
-    return this.itemService.findOne(id);
+    return
   }
 
   @Post()
