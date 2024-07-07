@@ -8,12 +8,17 @@ import { RoleModule } from './Role/role.module';
 import { Role } from './Entity/role.Entity';
 import { User } from './Entity/user.Entity';
 import { Module } from '@nestjs/common';
+import { CategoryModule } from './category/categories.module';
+import { ItemModule } from './items/item.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions),
     UserModule,
     ConfigModule.forRoot(),
+    RoleModule,
+    CategoryModule,
+    ItemModule,
     RoleModule,
     TypeOrmModule.forFeature([Role, User]),
   ],

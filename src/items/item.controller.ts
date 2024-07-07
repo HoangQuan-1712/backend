@@ -1,8 +1,10 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { Item } from 'src/entity/item.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('items')
+@ApiTags("ms-item")
+@Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) { }
 

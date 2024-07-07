@@ -5,7 +5,7 @@ import { Category } from '../Entity/category.entity';
 
 
 @Injectable()
-export class CategoriesService {
+export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,

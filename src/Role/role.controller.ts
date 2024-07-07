@@ -1,34 +1,36 @@
 import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
-import { RolesService } from './role.service';
+import { RoleService } from './role.service'
 import { Role } from 'src/Entity/role.Entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('roles')
-export class RolesController {
-  constructor(private readonly rolesService: RolesService) { }
+@Controller('role')
+@ApiTags("ms-role")
+export class RoleController {
+  constructor(private readonly roleService: RoleService) { }
 
   @Get()
   findAll(): Promise<Role[]> {
-    return this.rolesService.findAll();
+    return this.roleService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: number): Promise<Role> {
-    return this.rolesService.findOne(id);
+    return this.roleService.findOne(id);
   }
 
   @Post()
   create(@Body() role: Role): Promise<Role> {
-    return this.rolesService.create(role);
+    return this.roleService.create(role);
   }
 
   @Put(":id")
   update(@Param() id: number, @Body() updatedRole: Partial<Role>): Promise<Role> {
-    return this.rolesService.update(id, updatedRole);
+    return this.roleService.update(id, updatedRole);
   }
 
   @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {
-    return this.rolesService.remove(id);
+    return this.roleService.remove(id);
   }
 }
 

@@ -4,13 +4,13 @@ import { Item } from 'src/entity/item.entity';
 import { ItemService } from 'src/items/item.service';
 import { ItemController } from 'src/items/item.controller';
 import { ConfigModule } from '@nestjs/config';
-import { CategoriesModule } from 'src/category/categories.module';
+import { CategoryModule } from 'src/category/categories.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([Item]),
         ConfigModule,
-        CategoriesModule
+        CategoryModule
     ],
     providers: [ItemService],
     controllers: [ItemController],

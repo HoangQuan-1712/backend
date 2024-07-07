@@ -2,6 +2,8 @@ import { DataSourceOptions, DataSource } from "typeorm";
 import * as dotenv from 'dotenv'
 import { User } from "src/Entity/user.Entity";
 import { Role } from "src/Entity/role.Entity";
+import { Category } from "src/Entity/category.entity";
+import { Item } from "src/entity/item.entity";
 dotenv.config();
 
 export const dataSourceOptions: DataSourceOptions = {
@@ -11,7 +13,7 @@ export const dataSourceOptions: DataSourceOptions = {
     username: process.env.USERNAME_DB,
     password: process.env.PASSWORD_DB,
     database: process.env.DATABASE_DB,
-    entities: [User, Role],
+    entities: [User, Role, Item, Category],
     migrations: ['dist/db/migrations/*.js'],
     synchronize: true
 }

@@ -1,10 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
-import { CategoriesService } from 'src/category/categories.service';
+import { CategoryService } from 'src/category/categories.service';
 import { Category } from '../Entity/category.entity';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('categories')
-export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) { }
+@ApiTags("ms-category")
+@Controller('category')
+export class CategoryController {
+  constructor(private readonly categoriesService: CategoryService) { }
 
   @Get("all")
   getAllCategory(): Promise<Category[]> {
@@ -27,13 +29,11 @@ export class CategoriesController {
   }
 
   @Post()
-  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() category: Category): Promise<Category> {
     return this.categoriesService.createCategory(category);
   }
 
   @Put(':id')
-  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: number, @Body() category: Category): Promise<Category> {
     return this.categoriesService.update(id, category);
   }

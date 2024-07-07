@@ -2,14 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Item } from 'src/entity/item.entity';
-import { CategoriesService } from '../category/categories.service';
+import { CategoryService } from '../category/categories.service';
 
 @Injectable()
 export class ItemService {
   constructor(
     @InjectRepository(Item)
-    private itemRepository: Repository<Item>,
-    private readonly categoryService: CategoriesService
+    private readonly itemRepository: Repository<Item>,
   ) { }
 
   findAll(): Promise<Item[]> {
