@@ -33,14 +33,28 @@ export class UserService {
     return await this.usersRepository.delete({ id: id })
   }
 
-  async findUsersByQuery(q: string): Promise<User[]> {
+  async findUsersByQuery(q: string, page: number): Promise<User[]> {
+    //lấy bao nhiêu cái
+    if (page <= 0) {
+
+      return await this.usersRepository
+        .createQueryBuilder('user')
+        .where('user.firstname LIKE :query', { query: `%${q}%` })
+        .orWhere('user.lastname LIKE :query', { query: `%${q}%` })
+        .orWhere('user.email LIKE :query', { query: `%${q}%` })
+        .getMany()
+    }
+    const total = 2
+    const skip = (page - 1) * total
+
     return await this.usersRepository
       .createQueryBuilder('user')
       .where('user.firstname LIKE :query', { query: `%${q}%` })
       .orWhere('user.lastname LIKE :query', { query: `%${q}%` })
       .orWhere('user.email LIKE :query', { query: `%${q}%` })
-      .getMany();
+      .skip(skip)
+      .take(total)
+      .getMany()
   }
 }
-//CURD
-// tìm kiếm theo tên firstname hoặc lastname hoặc email
+//bycrypt

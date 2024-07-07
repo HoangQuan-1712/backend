@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserModel } from './Model/create-user.model';
 import { UpdateUserModel } from './Model/update-user.model';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/Entity/user.Entity';
 
 @Controller("user")
@@ -11,9 +11,9 @@ export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @Get("/search")
-  SearchUser(@Param("q") q: string): any {
-    console.log(q);
-    return this.userService.findUsersByQuery(q);
+  SearchUser(@Query("q") q: string, @Query("page") page: number): any {
+    //Phân trang
+    return this.userService.findUsersByQuery(q, page);
   }
   @Get()
   getAllUser(): any {
