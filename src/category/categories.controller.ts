@@ -3,7 +3,7 @@ import { CategoriesService } from 'src/category/categories.service';
 import { Category } from '../Entity/category.entity';
 
 @Controller('categories')
-export class CategoryController {
+export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) { }
 
   @Get("admin")

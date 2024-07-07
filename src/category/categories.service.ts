@@ -50,7 +50,7 @@ export class CategoriesService {
     };
   }
 
-  async findAll(): Promise<Category[]> {
+  async findAll(items): Promise<Category[]> {
     return this.categoryRepository.find({ relations: ['items'] });
   }
 
@@ -81,4 +81,18 @@ export class CategoriesService {
     await this.categoryRepository.delete(id);
   }
 
+  async deletemany(ids: number[]): Promise<any> {
+    if (ids.length <= 0) {
+      throw new HttpException({ messages: 'Delete items error!' }, HttpStatus.BAD_REQUEST);
+    }
+    const itemsToDelete = await this.categoryRepository.findByIds(ids);
+    itemsToDelete.forEach(item => {
+      deleteFile(item.thumbnail);
+    });
+    await this.categoryRepository.delete(ids);
+
+    return {
+      message: "Delete succesfully"
+    }
+  }
 }

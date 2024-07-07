@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { Item } from 'src/items/entity/item.entity';
+import { Item } from 'src/entity/item.entity';
 
 @Entity()
 export class Category {
@@ -8,6 +8,9 @@ export class Category {
 
   @Column()
   name: string;
+
+  @Column({ length: 255, nullable: true })
+  thumbnail: string;
 
   @OneToMany(() => Item, item => item.category)
   items: Item[];
