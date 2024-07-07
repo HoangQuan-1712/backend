@@ -6,7 +6,7 @@ export class Item {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 100, nullable: false })
   name: string;
 
   @Column('decimal')
@@ -20,6 +20,6 @@ export class Item {
   @Column('text')
   description: string;
 
-  @ManyToOne(() => Category, category => category.items)
+  // @ManyToOne(() => Category, category => category.items)
   category: Category;
 }

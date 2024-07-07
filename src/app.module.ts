@@ -10,6 +10,8 @@ import { User } from './Entity/user.Entity';
 import { Module } from '@nestjs/common';
 import { CategoryModule } from './category/categories.module';
 import { ItemModule } from './items/item.module';
+import { Item } from './entity/item.entity';
+import { Category } from './Entity/category.entity';
 
 @Module({
   imports: [
@@ -19,8 +21,7 @@ import { ItemModule } from './items/item.module';
     RoleModule,
     CategoryModule,
     ItemModule,
-    RoleModule,
-    TypeOrmModule.forFeature([Role, User]),
+    TypeOrmModule.forFeature([Role, User, Category, Item]),
   ],
   controllers: [AppController],
   providers: [AppService],
