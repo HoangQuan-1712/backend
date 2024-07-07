@@ -28,17 +28,24 @@ export class CategoryController {
   }
 
   @Post()
+  @UsePipes(new ValidationPipe({ transform: true }))
   create(@Body() category: Category): Promise<Category> {
     return this.categoriesService.createCategory(category);
   }
 
   @Put(':id')
+  @UsePipes(new ValidationPipe({ transform: true }))
   update(@Param('id') id: number, @Body() category: Category): Promise<Category> {
     return this.categoriesService.update(id, category);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
-    return this.categoriesService.remove(id);
+  Delete(@Param('id') id: number): Promise<void> {
+    return this.categoriesService.delete(id);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number): Promise<Category> {
+    return this.categoriesService.findCategoryById(id);
   }
 }
