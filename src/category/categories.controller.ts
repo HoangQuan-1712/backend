@@ -1,10 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriesService } from 'src/category/categories.service';
 import { Category } from '../Entity/category.entity';
+import { DeleteManyDto } from './dto/delete-many.dto';
+import { get } from 'http';
 
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) { }
+
+  @Get("all")
+  getAllCategory(): Promise<Category[]> {
+    return this.categoriesService.getAllCategory();
+  }
 
   @Get("admin")
   adminFindAll(@Query('page') page: number, @Query('search') search: string): Promise<any> {
@@ -41,5 +48,11 @@ export class CategoriesController {
   @Get(':id')
   findOne(@Param('id') id: number): Promise<Category> {
     return this.categoriesService.findCategoryById(id);
+  }
+
+  @Delete("many")
+  @UsePipes(new ValidationPipe({ transform: true }))
+  deleteMany(@Body() deleteManyDto: DeleteManyDto): Promise<void> {
+    return this.categoriesService.deleteMany(deleteManyDto.listid);
   }
 }

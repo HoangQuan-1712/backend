@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Item } from 'src/items/entity/item.entity';
+import { Item } from 'src/entity/item.entity';
 import { CategoriesService } from '../category/categories.service';
 
 @Injectable()
@@ -16,8 +16,11 @@ export class ItemService {
     return this.itemRepository.find({ relations: ['category'] });
   }
 
-  findOne(id: number): Promise<Item> {
-    return this.itemRepository.findOne(id, { relations: ['category'] });
+  async findById(id: number): Promise<Item> {
+    return await this.itemRepository.findOne({
+      where: { id },
+      relations: ['category']
+    });
   }
 
   create(item: Item): Promise<Item> {
@@ -26,7 +29,7 @@ export class ItemService {
 
   async update(id: number, item: Item): Promise<Item> {
     await this.itemRepository.update(id, item);
-    return this.findOne(id);
+    return this.findById(id);
   }
 
   async remove(id: number): Promise<void> {

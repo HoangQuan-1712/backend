@@ -11,6 +11,10 @@ export class CategoriesService {
     private categoryRepository: Repository<Category>,
   ) { }
 
+  async getAllCategory(): Promise<Category[]> {
+    return this.categoryRepository.find();
+  }
+
   async AdminFindAll(page: number, search: string): Promise<any> {
     const pageSize = 8;
     let listCategory
@@ -81,18 +85,7 @@ export class CategoriesService {
     await this.categoryRepository.delete(id);
   }
 
-  async deletemany(ids: number[]): Promise<any> {
-    if (ids.length <= 0) {
-      throw new HttpException({ messages: 'Delete items error!' }, HttpStatus.BAD_REQUEST);
-    }
-    const itemsToDelete = await this.categoryRepository.findByIds(ids);
-    itemsToDelete.forEach(item => {
-      deleteFile(item.thumbnail);
-    });
-    await this.categoryRepository.delete(ids);
-
-    return {
-      message: "Delete succesfully"
-    }
+  async deleteMany(listid: number[]): Promise<void> {
+    await this.categoryRepository.delete(listid);
   }
 }
