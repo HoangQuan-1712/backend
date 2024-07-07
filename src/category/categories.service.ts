@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Category } from './entity/category.entity';
+import { Category } from '../Entity/category.entity';
 
 
 @Injectable()
@@ -10,6 +10,45 @@ export class CategoriesService {
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
   ) { }
+
+  async AdminFindAll(page: number, search: string): Promise<any> {
+    const pageSize = 8;
+    let listCategory
+    let totalItems
+    if (page < 1) {
+      page = 1
+    }
+    const offset = (page - 1) * pageSize;
+    if (search && search !== undefined) {
+      listCategory = await this.categoryRepository.createQueryBuilder('category')
+        .where('category.name LIKE :search', { search: `%${search}%` })
+        .skip(offset)
+        .take(pageSize)
+        .getMany();
+      totalItems = await this.categoryRepository.createQueryBuilder('category')
+        .where('category.name LIKE :search', { search: `%${search}%` })
+        .getCount();;
+
+    }
+    else {
+      totalItems = (await this.categoryRepository.find()).length;
+
+      listCategory = await this.categoryRepository.find({
+        skip: offset,
+        take: pageSize
+      });
+    }
+    const totalPages = Math.ceil(totalItems / pageSize);
+    return {
+      listCategory: listCategory,
+      pagination: {
+        totalItems: totalItems,
+        pageLength: totalPages,
+        currentPage: page,
+        pageSize: pageSize,
+      }
+    };
+  }
 
   async findAll(): Promise<Category[]> {
     return this.categoryRepository.find({ relations: ['items'] });
@@ -33,16 +72,12 @@ export class CategoriesService {
     }
   }
 
-  findOne(id: number): Promise<Category> {
-    return this.categoryRepository.findOne(id, { relations: ['items'] });
-  }
-
   async update(id: number, category: Category): Promise<Category> {
     await this.categoryRepository.update(id, category);
-    return this.findOne(id);
+    return this.findCategoryById(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async deleteCategory(id: number): Promise<void> {
     await this.categoryRepository.delete(id);
   }
 

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CategoriesService } from 'src/category/categories.service';
-import { Category } from './entity/category.entity';
+import { Category } from '../Entity/category.entity';
 
 @Controller('categories')
 export class CategoryController {
@@ -9,12 +9,6 @@ export class CategoryController {
   @Get("admin")
   adminFindAll(@Query('page') page: number, @Query('search') search: string): Promise<any> {
     return this.categoriesService.AdminFindAll(page, search);
-  }
-
-  @Delete("many")
-  @UsePipes(new ValidationPipe({ transform: true }))
-  DeleteMany(@Body() deleteManyDto: any): Promise<void> {
-    return this.categoriesService.deletemany(deleteManyDto.data.listid);
   }
 
   @Get()
@@ -41,7 +35,7 @@ export class CategoryController {
 
   @Delete(':id')
   Delete(@Param('id') id: number): Promise<void> {
-    return this.categoriesService.delete(id);
+    return this.categoriesService.deleteCategory(id);
   }
 
   @Get(':id')
