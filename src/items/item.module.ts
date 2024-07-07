@@ -9,7 +9,7 @@ import { CategoriesModule } from 'src/category/categories.module';
 @Module({
     imports: [
         TypeOrmModule.forFeature([Item])
-  ConfigModule,
+        ConfigModule,
         CategoriesModule
     ],
     providers: [ItemService],

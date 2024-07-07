@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { CategoryiesService } from 'src/category/categories.service';
+import { CategoriesService } from 'src/category/categories.service';
 import { Category } from './entity/category.entity';
 
 @Controller('categories')
 export class CategoryController {
-  constructor(private readonly categoryService: CategoriesService) { }
+  constructor(private readonly categoriesService: CategoriesService) { }
 
   @Get("admin")
   adminFindAll(@Query('page') page: number, @Query('search') search: string): Promise<any> {
@@ -29,7 +29,7 @@ export class CategoryController {
 
   @Post()
   create(@Body() category: Category): Promise<Category> {
-    return this.categoriesService.create(category);
+    return this.categoriesService.createCategory(category);
   }
 
   @Put(':id')
