@@ -2,13 +2,18 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { UserService } from './user.service';
 import { CreateUserModel } from './Model/create-user.model';
 import { UpdateUserModel } from './Model/update-user.model';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/Entity/user.Entity';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
+
 
 @Controller("user")
 @ApiTags("ms-user")
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(
+    private readonly userService: UserService
+
+  ) { }
 
   @Get("/search")
   SearchUser(@Query("q") q: string, @Query("page") page: number): any {
@@ -20,6 +25,7 @@ export class UserController {
     return this.userService.getAllUser()
   }
   @Post()
+  @ApiTags("ms-user")
   createUser(@Body() model: CreateUserModel): Promise<User> {
     if (model.password.length < 6) {
       throw new Error('Password must be at least 6 characters long.');
@@ -38,4 +44,21 @@ export class UserController {
   deleteUserById(@Param("id") id: number): any {
     return this.userService.deleteUserById(id)
   }
+
+  @Post("/register")
+  async register(@Body() user: User): Promise<any> {
+    return this.userService.register(user);
+  }
+
+  @Post("/login")
+  async login(@Body() loginUserDto: LoginUserDto): Promise<any> {
+    return this.userService.signIn(loginUserDto);
+  }
+
+  @Post("/refresh-token/:id")
+  async refreshToken(@Param("id") id: number): Promise<any> {
+    return this.userService.refreshToken(id);
+  }
 }
+
+
