@@ -21,8 +21,9 @@ export class UserService {
     return await this.usersRepository.find({ where: { id: id } })
   }
 
-  async createUser(model: CreateUserModel) {
-    return await this.usersRepository.save(model)
+  async createUser(model: CreateUserModel): Promise<User> {
+    const newUser = this.usersRepository.create(model);
+    return await this.usersRepository.save(newUser)
   }
 
   async updateUser(id: number, model: UpdateUserModel) {

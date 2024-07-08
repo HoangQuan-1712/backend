@@ -20,7 +20,10 @@ export class UserController {
     return this.userService.getAllUser()
   }
   @Post()
-  createUser(@Body() model: CreateUserModel): any {
+  createUser(@Body() model: CreateUserModel): Promise<User> {
+    if (model.password.length < 6) {
+      throw new Error('Password must be at least 6 characters long.');
+    }
     return this.userService.createUser(model)
   }
   @Get(":id")
