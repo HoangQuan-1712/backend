@@ -85,7 +85,7 @@ export class CategoryService {
     await this.categoryRepository.delete(id);
   }
 
-  async deleteMany(listid: number[]): Promise<void> {
-    await this.categoryRepository.delete(listid);
-  }
+  // async deleteMany(listid: number[]): Promise<void> {
+  //   await this.categoryRepository.delete(listid);
+  // }
 }

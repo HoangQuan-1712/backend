@@ -10,10 +10,7 @@ import { LoginUserDto } from 'src/user/dto/login-user.dto';
 @Controller("user")
 @ApiTags("ms-user")
 export class UserController {
-  constructor(
-    private readonly userService: UserService
-
-  ) { }
+  constructor(private readonly userService: UserService) { }
 
   @Get("/search")
   SearchUser(@Query("q") q: string, @Query("page") page: number): any {
@@ -47,18 +44,18 @@ export class UserController {
 
   @Post("/register")
   async register(@Body() user: User): Promise<any> {
-    return this.userService.register(user);
+    return await this.userService.register(user);
   }
 
-  @Post("/login")
-  async login(@Body() loginUserDto: LoginUserDto): Promise<any> {
-    return this.userService.signIn(loginUserDto);
-  }
+  // @Post("/login")
+  // async login(@Body() loginUserDto: LoginUserDto): Promise<any> {
+  //   return this.userService.signIn(loginUserDto);
+  // }
 
-  @Post("/refresh-token/:id")
-  async refreshToken(@Param("id") id: number): Promise<any> {
-    return this.userService.refreshToken(id);
-  }
+  // @Post("/refresh-token/:id")
+  // async refreshToken(@Param("id") id: number): Promise<any> {
+  //   return this.userService.refreshToken(id);
+  // }
 }
 
 
